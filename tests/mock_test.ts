@@ -1,7 +1,7 @@
-import { assertRejects } from "jsr:@std/assert";
-import { beforeEach, describe, it } from "jsr:@std/testing/bdd";
+import { assertRejects } from "@std/assert";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 import { WebSize } from "../src/mod.ts";
-import { stub } from "jsr:@std/testing/mock";
+import { stub } from "@std/testing/mock";
 
 describe("WebSize with mocks", () => {
   let webSize: WebSize;

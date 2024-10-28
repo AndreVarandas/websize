@@ -1,4 +1,4 @@
-import { launch } from "jsr:@astral/astral";
+import { launch } from "@astral/astral";
 import type { WebSizeOptions } from "../types.ts";
 
 /**

@@ -1,5 +1,5 @@
-import { assert, assertRejects } from "jsr:@std/assert";
-import { beforeEach, describe, it } from "jsr:@std/testing/bdd";
+import { assert, assertRejects } from "@std/assert";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 import { WebSize } from "../src/mod.ts";
 import { WaitUntil } from "../src/types.ts";
 
