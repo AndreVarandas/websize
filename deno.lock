@@ -2,6 +2,7 @@
   "version": "4",
   "specifiers": {
     "jsr:@astral/astral@*": "0.4.8",
+    "jsr:@astral/astral@~0.4.8": "0.4.8",
     "jsr:@deno-library/progress@1.4.9": "1.4.9",
     "jsr:@std/assert@*": "0.223.0",
     "jsr:@std/assert@0.223": "0.223.0",
@@ -13,6 +14,7 @@
     "jsr:@std/internal@^1.0.4": "1.0.4",
     "jsr:@std/path@0.223.0": "0.223.0",
     "jsr:@std/testing@*": "1.0.3",
+    "jsr:@std/testing@^1.0.3": "1.0.3",
     "jsr:@zip-js/zip-js@2.7.41": "2.7.41"
   },
   "jsr": {
@@ -78,5 +80,12 @@
     "@zip-js/zip-js@2.7.41": {
       "integrity": "a883116c1b46673de643f9cd3b6619d746271b96cd9a8e2b9d0bb8353d764d3d"
     }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@astral/astral@~0.4.8",
+      "jsr:@std/assert@^1.0.6",
+      "jsr:@std/testing@^1.0.3"
+    ]
   }
 }
