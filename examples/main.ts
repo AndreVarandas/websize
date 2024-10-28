@@ -1,5 +1,5 @@
-import { WebSize } from "./src/mod.ts";
-import { WaitUntil } from "./src/types.ts";
+import { WebSize } from "../src/mod.ts";
+import { WaitUntil } from "../src/types.ts";
 
 /**
  * Demonstrates various ways to use the WebSize library.

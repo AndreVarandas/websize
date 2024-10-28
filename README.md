@@ -2,8 +2,10 @@
 
 ![Deno](https://img.shields.io/badge/Deno-000000?style=for-the-badge&logo=deno&logoColor=white)
 [![JSR Score](https://jsr.io/badges/@varandas/websize)](https://jsr.io/@varandas/websize)
+[![codecov](https://codecov.io/gh/AndreVarandas/websize/branch/main/graph/badge.svg)](https://codecov.io/gh/AndreVarandas/websize)
 
-A Deno library for measuring webpage sizes and render times. Get accurate measurements of:
+A Deno library for measuring webpage sizes and render times. Get accurate
+measurements of:
 
 - Raw HTML size
 - Rendered page size (after JavaScript execution)
@@ -114,7 +116,8 @@ deno task check
 
 ## Under the Hood
 
-WebSize uses [Astral](https://jsr.io/@astral/astral) as its headless browser engine to:
+WebSize uses [Astral](https://jsr.io/@astral/astral) as its headless browser
+engine to:
 
 1. Fetch raw HTML content
 2. Execute JavaScript

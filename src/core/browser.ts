@@ -39,7 +39,7 @@ export class BrowserManager {
    */
   async getRenderedContent(
     url: string,
-    waitUntil: WebSizeOptions["waitUntil"]
+    waitUntil: WebSizeOptions["waitUntil"],
   ): Promise<string> {
     const browser = await launch({ headless: true });
     try {

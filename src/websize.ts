@@ -71,7 +71,7 @@ export class WebSize {
       // Get rendered content
       const renderedContent = await this.browserManager.getRenderedContent(
         url,
-        this.options.waitUntil
+        this.options.waitUntil,
       );
       const renderedSizeKB = SizeCalculator.calculateKilobytes(renderedContent);
 
@@ -117,7 +117,7 @@ export class WebSize {
    */
   static async measure(
     url: string,
-    options?: WebSizeOptions
+    options?: WebSizeOptions,
   ): Promise<PageSizeResult> {
     const instance = new WebSize(options);
     return await instance.calculatePageSize(url);

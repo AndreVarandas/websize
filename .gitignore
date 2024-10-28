@@ -1,2 +1,6 @@
 # OSX
 .DS_Store
+
+# Coverage reports
+coverage/
+coverage.lcov

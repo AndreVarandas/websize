@@ -3,13 +3,13 @@
   "version": "0.1.1",
   "exports": "./src/mod.ts",
   "publish": {
-    "include": ["src/**/*", "README.md", "LICENSE"]
+    "include": ["src/**/*", "deno.json", "README.md", "LICENSE"]
   },
   "tasks": {
-    "test": "deno test -A tests/",
+    "test": "deno test -A --trace-leaks",
     "test:watch": "deno test -A --watch tests/",
     "check": "deno check src/mod.ts",
-    "example": "deno run -A example.ts"
+    "example": "deno run -A examples/main.ts"
   },
   "test": {
     "include": ["tests/"]

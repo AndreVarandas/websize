@@ -44,8 +44,10 @@ describe("WebSize with mocks", () => {
     const originalFetch = globalThis.fetch;
 
     // Mock global fetch to simulate network error
-    globalThis.fetch = stub(globalThis, "fetch", () =>
-      Promise.reject(new Error("Network error"))
+    globalThis.fetch = stub(
+      globalThis,
+      "fetch",
+      () => Promise.reject(new Error("Network error")),
     ) as typeof globalThis.fetch;
 
     try {
@@ -53,7 +55,7 @@ describe("WebSize with mocks", () => {
       await assertRejects(
         () => webSize.calculatePageSize("https://example.com"),
         Error,
-        "Network error"
+        "Network error",
       );
     } finally {
       // Restore original fetch to prevent test interference
