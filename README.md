@@ -1,66 +1,130 @@
-# WebSize
+# WebSize 📏
 
 ![Deno](https://img.shields.io/badge/Deno-000000?style=for-the-badge&logo=deno&logoColor=white)
+[![JSR Score](https://jsr.io/badges/@varandas/websize)](https://jsr.io/@varandas/websize)
 
-⚖ A library for measuring webpage sizes and render times.
+A Deno library for measuring webpage sizes and render times. Get accurate measurements of:
 
-![Logo](./extra/logo.webp)
+- Raw HTML size
+- Rendered page size (after JavaScript execution)
+- Network transfer size
+- Render time
 
-This library uses [https://deno.land/x/astral@0.3.5](https://deno.land/x/astral@0.3.5) as a headless browser.
+## Features
 
-I needed a way to measure the size of a webpage, when using a headless browser. This way I can measure how much resources the requested page needs.
+- 🚀 Simple static method for quick measurements
+- ⚙️ Configurable options for detailed control
+- 📊 Detailed size metrics and timing
+- 🌐 Supports custom user agents
+- 🔄 Multiple wait conditions for accurate rendering
+- 📝 Optional verbose logging
 
-## Example
-
-Please refer to the [example.ts](./example.ts) file.
-
-You can run the example with:
+## Installation
 
 ```bash
-deno run example
+# Import from JSR
+import { WebSize } from "jsr:@varandas/websize";
 ```
 
-## Usage
+## Quick Start
 
 ```typescript
-import { WebSize } from "jsr:@varandas/websize";
-
-// Quick usage with static method
+// Quick single measurement
 const result = await WebSize.measure("https://example.com");
 console.log(result);
-
-// With options
-const result = await WebSize.measure("https://example.com", {
-  waitUntil: "networkidle2",
-  verbose: true,
-});
-
-// Using the class for multiple measurements
-const webSize = new WebSize({
-  verbose: true,
-});
-const result = await webSize.calculatePageSize("https://example.com");
+// {
+//   rawSizeKB: 15.2,
+//   renderedSizeKB: 25.7,
+//   renderTimeSeconds: 1.2,
+//   transferSizeMB: 0.35
+// }
 ```
 
-## API
+## Advanced Usage
 
-### Options
+### With Custom Options
 
-- `userAgent`: Custom user agent string (defaults to Chrome/122)
-- `waitUntil`: Page load condition ('load' | 'domcontentloaded' | 'networkidle0' | 'networkidle2')
-- `verbose`: Enable console logging
+```typescript
+const result = await WebSize.measure("https://example.com", {
+  waitUntil: "networkidle2", // Wait for network to be idle
+  verbose: true, // Enable detailed logging
+  userAgent: "Custom Agent", // Set custom user agent
+});
+```
 
-### Result
+### Multiple Measurements
+
+```typescript
+// Create a reusable instance
+const webSize = new WebSize({
+  verbose: true,
+  waitUntil: "load",
+});
+
+// Measure multiple sites
+const sites = ["https://deno.land", "https://example.com"];
+for (const site of sites) {
+  const result = await webSize.calculatePageSize(site);
+  console.log(`${site}: ${result.renderedSizeKB}KB`);
+}
+```
+
+## API Reference
+
+### WebSize Class
+
+#### Constructor Options
+
+| Option      | Type        | Default        | Description               |
+| ----------- | ----------- | -------------- | ------------------------- |
+| `userAgent` | `string`    | Chrome/122...  | Browser user agent string |
+| `waitUntil` | `WaitUntil` | `networkidle2` | Page load condition       |
+| `verbose`   | `boolean`   | `false`        | Enable console logging    |
+
+#### Wait Conditions
+
+- `load`: Wait for load event
+- `networkidle0`: No network connections for 500ms
+- `networkidle2`: ≤ 2 network connections for 500ms
+- `none`: Don't wait
+
+### Result Object
 
 ```typescript
 interface PageSizeResult {
   rawSizeKB: number; // Size of raw HTML
-  renderedSizeKB: number; // Size after JavaScript execution
-  renderTimeSeconds: number; // Total processing time
+  renderedSizeKB: number; // Size after JavaScript
+  renderTimeSeconds: number; // Processing time
   transferSizeMB: number; // Network transfer size
 }
 ```
 
+## Development
+
+```bash
+# Run tests
+deno task test
+
+# Run example
+deno task example
+
+# Type check
+deno task check
+```
+
+## Under the Hood
+
+WebSize uses [Astral](https://jsr.io/@astral/astral) as its headless browser engine to:
+
+1. Fetch raw HTML content
+2. Execute JavaScript
+3. Measure rendered page size
+4. Track network transfers
+
 ## License
 
-[MIT - André Varandas](LICENSE)
+[MIT License](LICENSE) - © André Varandas
+
+---
+
+Found a bug? [Open an issue](https://github.com/AndreVarandas/websize/issues)

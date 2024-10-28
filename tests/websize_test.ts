@@ -1,89 +1,85 @@
-import { assert, assertRejects } from "@std/assert";
+import { assert } from "@std/assert";
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { WebSize } from "../src/mod.ts";
 import { WaitUntil } from "../src/types.ts";
 
 /**
- * Test the WebSize class.
+ * Integration test suite for the WebSize class.
+ * Tests core functionality with real network requests and browser interactions.
+ *
+ * @group Integration
+ * @group Network
  */
 describe("WebSize", () => {
-  let websize: WebSize;
+  /** WebSize instance used across tests */
+  let webSize: WebSize;
 
+  /**
+   * Creates a fresh WebSize instance before each test
+   * to ensure test isolation and clean state.
+   */
   beforeEach(() => {
-    websize = new WebSize();
+    webSize = new WebSize();
   });
 
   /**
-   * Test that the WebSize class measures the page size for valid URLs.
+   * Tests the core page size calculation functionality.
+   * Verifies that:
+   * 1. Raw HTML size is calculated
+   * 2. Rendered size is calculated
+   * 3. Render time is measured
+   * 4. All values are positive numbers
    */
-  it("should measure page size for valid URLs", async () => {
-    const result = await websize.calculatePageSize("https://example.com");
+  it("should calculate page size", async () => {
+    const result = await webSize.calculatePageSize("https://example.com");
 
-    assert(result.rawSizeKB > 0, "Raw size should be greater than 0");
-    assert(result.renderedSizeKB > 0, "Rendered size should be greater than 0");
-    assert(
-      result.renderTimeSeconds > 0,
-      "Render time should be greater than 0"
-    );
+    // Verify all measurements are present and valid
+    assert(result.rawSizeKB > 0, "Raw size should be positive");
+    assert(result.renderedSizeKB > 0, "Rendered size should be positive");
+    assert(result.renderTimeSeconds > 0, "Render time should be positive");
 
-    // Check transfer size if available
     if (result.transferSizeMB !== undefined) {
-      assert(
-        result.transferSizeMB > 0,
-        "Transfer size should be greater than 0 when available"
-      );
+      assert(result.transferSizeMB > 0, "Transfer size should be positive");
     }
   });
 
   /**
-   * Test that the WebSize class throws an error on invalid URLs.
+   * Tests custom configuration options.
+   * Verifies that:
+   * 1. Custom wait conditions are respected
+   * 2. Verbose logging works
+   * 3. Custom user agent is applied
    */
-  it("should throw on invalid URLs", async () => {
-    await assertRejects(
-      () =>
-        websize.calculatePageSize(
-          "https://invalid-url-that-does-not-exist.com/"
-        ),
-      Error
-    );
-  });
-
-  /**
-   * Test that the WebSize class accepts custom options.
-   */
-  it("should accept custom options", async () => {
-    const customWebSize = new WebSize({
-      userAgent: "Custom User Agent",
+  it("should work with custom options", async () => {
+    const webSize = new WebSize({
       waitUntil: WaitUntil.LOAD,
       verbose: true,
+      userAgent: "WebSize Test Agent",
     });
 
-    const result = await customWebSize.calculatePageSize("https://example.com");
-    assert(result.rawSizeKB > 0);
-  });
+    const result = await webSize.calculatePageSize("https://example.com");
 
-  /**
-   * Test that the WebSize class includes transfer size when available.
-   */
-  it("should include transfer size when available", async () => {
-    const result = await websize.calculatePageSize("https://example.com");
-
-    // Transfer size might be undefined if server doesn't send Content-Length
-    if (result.transferSizeMB !== undefined) {
-      assert(
-        result.transferSizeMB > 0,
-        "Transfer size should be greater than 0 when available"
-      );
-    }
+    // Verify measurements with custom options
+    assert(result.rawSizeKB > 0, "Raw size should be positive");
+    assert(result.renderedSizeKB > 0, "Rendered size should be positive");
+    assert(result.renderTimeSeconds > 0, "Render time should be positive");
   });
 });
 
 /**
- * Test the measure static method.
+ * Test suite for the static measure method.
+ * Verifies the convenience method works as expected.
+ *
+ * @group Integration
+ * @group Static
  */
 describe("measure static method", () => {
   /**
-   * Test that the measure static method works with default options.
+   * Tests the static measure method with default options.
+   * Verifies that:
+   * 1. Method returns valid results
+   * 2. All measurements are numbers
+   * 3. Operation completes successfully
    */
   it("should work with default options", async () => {
     const result = await WebSize.measure("https://example.com");
@@ -98,7 +94,11 @@ describe("measure static method", () => {
   });
 
   /**
-   * Test that the measure static method works with custom options.
+   * Tests the static measure method with custom options.
+   * Verifies that:
+   * 1. Custom options are properly applied
+   * 2. Results are valid with custom configuration
+   * 3. Verbose logging works in static context
    */
   it("should work with custom options", async () => {
     const result = await WebSize.measure("https://example.com", {

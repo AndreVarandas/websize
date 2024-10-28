@@ -2,19 +2,31 @@ import { WebSize } from "./src/mod.ts";
 import { WaitUntil } from "./src/types.ts";
 
 /**
- * Main function to run the examples.
+ * Demonstrates various ways to use the WebSize library.
+ * Includes examples of both static and instance-based measurements.
  *
- * @returns void
+ * Run this example with:
+ * ```bash
+ * deno task example
+ * ```
+ *
+ * @returns Promise<void>
  */
 async function main() {
   console.log("🔍 WebSize Examples\n");
 
-  // Example 1: Quick measurement with static method
+  /**
+   * Example 1: Quick measurement using static method
+   * Demonstrates the simplest way to measure a single page
+   */
   console.log("Example 1: Quick single measurement");
   const quickResult = await WebSize.measure("https://example.com");
   console.log("Quick measurement result:", quickResult, "\n");
 
-  // Example 2: Reusable instance with custom options
+  /**
+   * Example 2: Instance-based measurements with custom options
+   * Shows how to configure WebSize for multiple measurements
+   */
   console.log("Example 2: Multiple measurements with same configuration");
   const webSize = new WebSize({
     verbose: true,
@@ -22,7 +34,7 @@ async function main() {
     waitUntil: WaitUntil.LOAD,
   });
 
-  // Measure multiple sites
+  // List of sites to measure
   const sites = [
     "https://deno.land",
     "https://example.com",
@@ -31,6 +43,7 @@ async function main() {
 
   console.log("Measuring multiple sites...\n");
 
+  // Measure each site and handle potential errors
   for (const site of sites) {
     try {
       const result = await webSize.calculatePageSize(site);
@@ -51,5 +64,5 @@ async function main() {
   }
 }
 
-// Run examples
+// Run the examples
 main().catch(console.error);
