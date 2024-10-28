@@ -1,8 +1,12 @@
 # WebSize
 
+![Deno](https://img.shields.io/badge/Deno-000000?style=for-the-badge&logo=deno&logoColor=white)
+
 ⚖ A library for measuring webpage sizes and render times.
 
-This library uses [https://deno.land/x/astral@0.3.5](https://deno.land/x/astral@0.3.5) to control the browser.
+![Logo](./extra/logo.webp)
+
+This library uses [https://deno.land/x/astral@0.3.5](https://deno.land/x/astral@0.3.5) as a headless browser.
 
 I needed a way to measure the size of a webpage, when using a headless browser. This way I can measure how much resources the requested page needs.
 

@@ -3,6 +3,9 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 import { WebSize } from "../src/mod.ts";
 import { stub } from "@std/testing/mock";
 
+/**
+ * Test the WebSize class with mocks.
+ */
 describe("WebSize with mocks", () => {
   let webSize: WebSize;
 
@@ -10,6 +13,9 @@ describe("WebSize with mocks", () => {
     webSize = new WebSize();
   });
 
+  /**
+   * Test that the WebSize class handles fetch errors gracefully.
+   */
   it("should handle fetch errors gracefully", async () => {
     // Mock global fetch
     const originalFetch = globalThis.fetch;

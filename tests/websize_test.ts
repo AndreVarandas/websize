@@ -3,6 +3,9 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 import { WebSize } from "../src/mod.ts";
 import { WaitUntil } from "../src/types.ts";
 
+/**
+ * Test the WebSize class.
+ */
 describe("WebSize", () => {
   let websize: WebSize;
 
@@ -10,6 +13,9 @@ describe("WebSize", () => {
     websize = new WebSize();
   });
 
+  /**
+   * Test that the WebSize class measures the page size for valid URLs.
+   */
   it("should measure page size for valid URLs", async () => {
     const result = await websize.calculatePageSize("https://example.com");
 
@@ -29,6 +35,9 @@ describe("WebSize", () => {
     }
   });
 
+  /**
+   * Test that the WebSize class throws an error on invalid URLs.
+   */
   it("should throw on invalid URLs", async () => {
     await assertRejects(
       () =>
@@ -39,6 +48,9 @@ describe("WebSize", () => {
     );
   });
 
+  /**
+   * Test that the WebSize class accepts custom options.
+   */
   it("should accept custom options", async () => {
     const customWebSize = new WebSize({
       userAgent: "Custom User Agent",
@@ -50,6 +62,9 @@ describe("WebSize", () => {
     assert(result.rawSizeKB > 0);
   });
 
+  /**
+   * Test that the WebSize class includes transfer size when available.
+   */
   it("should include transfer size when available", async () => {
     const result = await websize.calculatePageSize("https://example.com");
 
@@ -63,7 +78,13 @@ describe("WebSize", () => {
   });
 });
 
+/**
+ * Test the measure static method.
+ */
 describe("measure static method", () => {
+  /**
+   * Test that the measure static method works with default options.
+   */
   it("should work with default options", async () => {
     const result = await WebSize.measure("https://example.com");
 
@@ -76,6 +97,9 @@ describe("measure static method", () => {
     }
   });
 
+  /**
+   * Test that the measure static method works with custom options.
+   */
   it("should work with custom options", async () => {
     const result = await WebSize.measure("https://example.com", {
       waitUntil: WaitUntil.LOAD,

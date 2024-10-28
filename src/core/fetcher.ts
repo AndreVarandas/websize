@@ -1,3 +1,6 @@
+/**
+ * The result of the fetch operation.
+ */
 interface FetchResult {
   rawHtml: string;
   transferSizeMB?: number;

@@ -2,6 +2,9 @@ import { assertEquals } from "@std/assert";
 import { describe, it } from "@std/testing/bdd";
 import { WebSize } from "../src/mod.ts";
 
+/**
+ * Test the helper functions.
+ */
 describe("Helper functions", () => {
   it("measure static method should work", async () => {
     const result = await WebSize.measure("https://example.com");

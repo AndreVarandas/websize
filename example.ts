@@ -1,6 +1,11 @@
 import { WebSize } from "./src/mod.ts";
 import { WaitUntil } from "./src/types.ts";
 
+/**
+ * Main function to run the examples.
+ *
+ * @returns void
+ */
 async function main() {
   console.log("🔍 WebSize Examples\n");
 

@@ -19,10 +19,26 @@ export class WebSize {
     verbose: false,
   };
 
+  /**
+   * The options for the WebSize class.
+   */
   private options: Required<WebSizeOptions>;
+
+  /**
+   * The fetcher for the WebSize class.
+   */
   private fetcher: Fetcher;
+
+  /**
+   * The browser manager for the WebSize class.
+   */
   private browserManager: BrowserManager;
 
+  /**
+   * Constructor for the WebSize class.
+   *
+   * @param options - The options for the WebSize class.
+   */
   constructor(options: WebSizeOptions = {}) {
     this.options = { ...this.defaultOptions, ...options };
     this.fetcher = new Fetcher(this.options.userAgent);
