@@ -5,6 +5,12 @@ import { Logger } from "./utils/logger.ts";
 import type { PageSizeResult, WebSizeOptions } from "./types.ts";
 import { WaitUntil } from "./types.ts";
 
+/**
+ * Responsible for calculating the page size of a given URL.
+ *
+ * Use this class if you want to measure the page size of a given URL with more
+ * control over the options.
+ */
 export class WebSize {
   private readonly defaultOptions: Required<WebSizeOptions> = {
     userAgent:
@@ -23,6 +29,13 @@ export class WebSize {
     this.browserManager = new BrowserManager(this.options.userAgent);
   }
 
+  /**
+   * Calculates the page size.
+   *
+   * @param url - The URL to calculate the page size of.
+   *
+   * @returns The page size result.
+   */
   async calculatePageSize(url: string): Promise<PageSizeResult> {
     const startTime = performance.now();
 
@@ -64,12 +77,16 @@ export class WebSize {
       }
     }
   }
-}
 
-export const measurePageSize = async (
-  url: string,
-  options?: WebSizeOptions
-): Promise<PageSizeResult> => {
-  const webSize = new WebSize(options);
-  return await webSize.calculatePageSize(url);
-};
+  /**
+   * Static helper method for quick, one-off measurements
+   */
+  static async measure(
+    url: string,
+    options?: WebSizeOptions
+  ): Promise<PageSizeResult> {
+    const instance = new WebSize(options);
+
+    return await instance.calculatePageSize(url);
+  }
+}

@@ -8,7 +8,8 @@
   "tasks": {
     "test": "deno test -A tests/",
     "test:watch": "deno test -A --watch tests/",
-    "check": "deno check src/mod.ts"
+    "check": "deno check src/mod.ts",
+    "example": "deno run -A example.ts"
   },
   "test": {
     "include": ["tests/"]

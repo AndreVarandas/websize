@@ -1,6 +1,6 @@
 import { assert, assertRejects } from "jsr:@std/assert";
 import { beforeEach, describe, it } from "jsr:@std/testing/bdd";
-import { WebSize, measurePageSize } from "../src/mod.ts";
+import { WebSize } from "../src/mod.ts";
 import { WaitUntil } from "../src/types.ts";
 
 describe("WebSize", () => {
@@ -63,9 +63,9 @@ describe("WebSize", () => {
   });
 });
 
-describe("measurePageSize helper", () => {
+describe("measure static method", () => {
   it("should work with default options", async () => {
-    const result = await measurePageSize("https://example.com");
+    const result = await WebSize.measure("https://example.com");
 
     assert(result.rawSizeKB > 0);
     assert(result.renderedSizeKB > 0);
@@ -77,7 +77,7 @@ describe("measurePageSize helper", () => {
   });
 
   it("should work with custom options", async () => {
-    const result = await measurePageSize("https://example.com", {
+    const result = await WebSize.measure("https://example.com", {
       waitUntil: WaitUntil.LOAD,
       verbose: true,
     });

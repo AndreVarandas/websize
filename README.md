@@ -1,26 +1,38 @@
 # WebSize
 
-A library for measuring webpage sizes and render times.
+⚖ A library for measuring webpage sizes and render times.
+
+This library uses [https://deno.land/x/astral@0.3.5](https://deno.land/x/astral@0.3.5) to control the browser.
+
+I needed a way to measure the size of a webpage, when using a headless browser. This way I can measure how much resources the requested page needs.
+
+## Example
+
+Please refer to the [example.ts](./example.ts) file.
+
+You can run the example with:
+
+```bash
+deno run example
+```
 
 ## Usage
 
 ```typescript
-import { measurePageSize } from "jsr:@varandas/websize";
+import { WebSize } from "jsr:@varandas/websize";
 
-// Quick usage
-const result = await measurePageSize("https://example.com");
+// Quick usage with static method
+const result = await WebSize.measure("https://example.com");
 console.log(result);
 
 // With options
-const result = await measurePageSize("https://example.com", {
-  waitUntil: "domcontentloaded",
+const result = await WebSize.measure("https://example.com", {
+  waitUntil: "networkidle2",
   verbose: true,
 });
 
-// Using the class
-import { WebSize } from "jsr:@varandas/websize";
+// Using the class for multiple measurements
 const webSize = new WebSize({
-  timeout: 30000,
   verbose: true,
 });
 const result = await webSize.calculatePageSize("https://example.com");
@@ -30,21 +42,21 @@ const result = await webSize.calculatePageSize("https://example.com");
 
 ### Options
 
-- `userAgent`: Custom user agent string
-- `timeout`: Maximum time to wait for page load (ms)
-- `waitUntil`: Page load condition ('load' | 'none' | 'networkidle0' | 'networkidle2')
+- `userAgent`: Custom user agent string (defaults to Chrome/122)
+- `waitUntil`: Page load condition ('load' | 'domcontentloaded' | 'networkidle0' | 'networkidle2')
 - `verbose`: Enable console logging
 
 ### Result
 
 ```typescript
 interface PageSizeResult {
-  rawSizeKB: number;
-  renderedSizeKB: number;
-  renderTimeSeconds: number;
+  rawSizeKB: number; // Size of raw HTML
+  renderedSizeKB: number; // Size after JavaScript execution
+  renderTimeSeconds: number; // Total processing time
+  transferSizeMB: number; // Network transfer size
 }
 ```
 
-# License
+## License
 
 [MIT - André Varandas](LICENSE)
